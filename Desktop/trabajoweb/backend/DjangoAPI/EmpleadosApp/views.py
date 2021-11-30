@@ -1,7 +1,7 @@
-from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
+from django.shortcuts import render
 
 from EmpleadosApp.models import Departments,Employees
 from EmpleadosApp.serializers import DepartmentSerializer,EmployeeSerializer
@@ -58,7 +58,7 @@ def employeeApi(request,id=0):
 
     elif request.method=='PUT':
         employee_data = JSONParser().parse(request)
-        employee=Employees.objects.get(EmployeetId=employee_data['EmployeeId'])
+        employee=Employees.objects.get(EmployeeId=employee_data['EmployeeId'])
         employee_serializer=EmployeeSerializer(employee,data=employee_data)
         if employee_serializer.is_valid():
             employee_serializer.save()
@@ -66,7 +66,7 @@ def employeeApi(request,id=0):
         return JsonResponse("Fallo al actualizar",safe=False)
 
     elif request.method=='DELETE':
-        employee=Employees.objects.get(Employee=id)
+        employee=Employees.objects.get(EmployeeId=id)
         employee.delete()
         return JsonResponse("Borrado satisfactoriamente!!",safe=False)
 
